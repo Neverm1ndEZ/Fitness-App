@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ExerciseListActivity">
+
+    <TextView
+        android:id="@+id/txtWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Welcome to the Fitness App!"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnGetSuggestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtWelcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="Get Suggestion" />
+
+</RelativeLayout>
