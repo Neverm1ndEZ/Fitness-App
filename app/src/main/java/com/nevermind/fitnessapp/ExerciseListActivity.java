@@ -1,64 +1,59 @@
+// src/your_package_name/ExerciseListActivity.java
 package com.nevermind.fitnessapp;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ExerciseListActivity extends AppCompatActivity {
-
-    private TextView txtWelcome;
+    private EditText editTextAge;
     private Button btnGetSuggestion;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_list);
 
-        txtWelcome = findViewById(R.id.txtWelcome);
+        editTextAge = findViewById(R.id.editTextAge);
         btnGetSuggestion = findViewById(R.id.btnGetSuggestion);
 
         Intent intent = getIntent();
-        String userName = intent.getStringExtra("userName");
-        String gender = intent.getStringExtra("gender");
-        String requirement = intent.getStringExtra("requirement");
-
-        String welcomeMessage = "Hello, " + userName + "!\nHere are some exercises for " + requirement + ".";
-        txtWelcome.setText(welcomeMessage);
+        name = intent.getStringExtra("name");
 
         btnGetSuggestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int age = intent.getIntExtra("age", 0);
+                int age = Integer.parseInt(editTextAge.getText().toString());
 
-                // TODO: Implement logic to display exercise suggestions based on age and requirement
-                String suggestionMessage = generateSuggestionMessage(requirement, age);
-                txtWelcome.setText(suggestionMessage);
+                // Generate exercise suggestions
+                String suggestionMessage = generateExerciseSuggestions(name, age);
+
+                // Display suggestions
+                ((TextView) findViewById(R.id.txtWelcome)).setText(suggestionMessage);
             }
         });
     }
 
-    // Example logic to generate exercise suggestions
-    private String generateSuggestionMessage(String requirement, int age) {
-        // Customize this method based on your actual logic
-        String suggestions = "Here are some exercise suggestions based on your age (" + age + ") and requirement:\n";
-        switch (requirement) {
-            case "Stress Control":
-                suggestions += "1. Yoga\n2. Meditation\n3. Deep Breathing Exercises";
-                break;
-            case "Lean Muscle Gain":
-                suggestions += "1. Weightlifting\n2. High-intensity Interval Training (HIIT)\n3. Protein-rich diet";
-                break;
-            case "Weight Loss":
-                suggestions += "1. Cardio workouts\n2. Healthy diet\n3. Consistent calorie deficit";
-                break;
-            default:
-                suggestions += "No specific suggestions available for this requirement.";
-                break;
+    // Method to generate exercise suggestions based on age and other details
+    private String generateExerciseSuggestions(String name, int age) {
+        StringBuilder suggestions = new StringBuilder("Hello, " + name + "!\nHere are some exercise suggestions based on your age ("
+                + age + "):\n");
+
+        // Customize the suggestions based on different age groups or requirements
+        if (age < 18) {
+            suggestions.append("1. Youth-friendly exercises\n2. Outdoor activities\n3. Fun sports");
+        } else if (age >= 18 && age < 40) {
+            suggestions.append("1. Cardio workouts\n2. Weight training\n3. Yoga for flexibility");
+        } else {
+            suggestions.append("1. Low-impact exercises\n2. Stretching routines\n3. Balance exercises");
         }
-        return suggestions;
+
+        return suggestions.toString();
     }
 }

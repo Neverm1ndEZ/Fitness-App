@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Spinner spinnerName, spinnerGender, spinnerRequirement;
-    private EditText editTextAge;
+    private EditText editTextName;
+    private Spinner spinnerGender, spinnerRequirement;
     private Button btnProceed;
 
     @Override
@@ -21,25 +21,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        spinnerName = findViewById(R.id.spinnerName);
+        editTextName = findViewById(R.id.editTextName);
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerRequirement = findViewById(R.id.spinnerRequirement);
-        editTextAge = findViewById(R.id.editTextAge);
         btnProceed = findViewById(R.id.btnProceed);
-
-        // Define arrays directly in the code
-        ArrayAdapter<CharSequence> nameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
-        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        nameAdapter.add("John");
-        nameAdapter.add("Jane");
-        // Add more names as needed
-        spinnerName.setAdapter(nameAdapter);
 
         ArrayAdapter<CharSequence> genderAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genderAdapter.add("Male");
         genderAdapter.add("Female");
-        // Add more genders as needed
         spinnerGender.setAdapter(genderAdapter);
 
         ArrayAdapter<CharSequence> requirementAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
@@ -47,22 +37,19 @@ public class MainActivity extends AppCompatActivity {
         requirementAdapter.add("Stress Control");
         requirementAdapter.add("Lean Muscle Gain");
         requirementAdapter.add("Weight Loss");
-        // Add more requirements as needed
         spinnerRequirement.setAdapter(requirementAdapter);
 
         btnProceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int age = Integer.parseInt(editTextAge.getText().toString());
-                String userName = spinnerName.getSelectedItem().toString();
+                String name = editTextName.getText().toString();
                 String gender = spinnerGender.getSelectedItem().toString();
                 String requirement = spinnerRequirement.getSelectedItem().toString();
 
                 Intent intent = new Intent(MainActivity.this, ExerciseListActivity.class);
-                intent.putExtra("userName", userName);
+                intent.putExtra("name", name);
                 intent.putExtra("gender", gender);
                 intent.putExtra("requirement", requirement);
-                intent.putExtra("age", age);
                 startActivity(intent);
             }
         });
